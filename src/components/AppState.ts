@@ -1,6 +1,5 @@
 import { Model } from "./base/Model";
-import { IAppState, IProduct, IOrder, IOrderFormError, FormError, IOrderDeliveryForm, IOrderContacts, PaymentMethods } from "../types";
-import { IEvents } from "./base/events";
+import { IAppState, IProduct, IOrder, FormError, IOrderContacts, PaymentMethods } from "../types";
 
 // Событие изменения каталога
 export type CatalogChangeEvent = {
