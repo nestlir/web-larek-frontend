@@ -1,39 +1,91 @@
-// Псевдонимы для типов
+/**
+ * Модуль, содержащий определения типов и интерфейсов связанных с системой событий
+ */
+
 // Хорошая практика даже простые типы выносить в алиасы
 // Зато когда захотите поменять это достаточно сделать в одном месте
-type EventName = string | RegExp; // Имя события может быть строкой или регулярным выражением
-type Subscriber = Function; // Подписчик - это функция
-
-// Интерфейс для работы с событиями
-export interface IEvents {
-    on<T extends object>(event: EventName, callback: (data: T) => void): void; // Подписаться на событие
-    emit<T extends object>(event: string, data?: T): void; // Инициировать событие
-    trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void; // Создать триггер для события
-}
-
-// Объект события
-type EmitterEvent = {
+/**
+ * Тип для представления имени события
+ */
+export type EventName = string | RegExp;
+/**
+ * Тип для представления обработчика события
+ */
+export type Subscriber = (event: unknown) => void;
+/**
+ * Тип для представления события, передаваемого в эмиттере
+ */
+export type EmitterEvent = {
+    /**
+     *Имя события
+     */
     eventName: string,
+    /**
+     *Данные, которые сопровождают событие
+     */
     data: unknown
 };
 
-// Класс, реализующий брокер событий
-export class EventEmitter implements IEvents {
-    _events: Map<EventName, Set<Subscriber>>; // Хранилище событий и подписчиков
+/**
+ * Интерфейс, описывающий API эмиттера событий
+ */
+export interface IEvents {
+    /**
+     * Установить обработчик на событие
+     * @param event Имя события
+     * @param callback Функция обработчик
+     */
+    on<T extends object>(event: EventName, callback: (data: T) => void): void;
+    /**
+     * Инициировать событие с данными
+     * @param eventName Имя события
+     * @param data Данные, которые сопровождают событие
+     */
+    emit<T extends object>(eventName: string, data?: T): void;
+    /**
+     * Сделать коллбек триггер, генерирующий событие при вызове
+     * @param eventName Имя события
+     * @param context Данные, которые сопровождают событие
+     * @returns Функция триггер
+     */
+    trigger<T extends object>(eventName: string, context?: Partial<T>): (data: T) => void;
+}
 
+/**
+ * Брокер событий, классическая реализация
+ * В расширенных вариантах есть возможность подписаться на все события
+ * или слушать события по шаблону например
+ */
+export class EventEmitter implements IEvents {
+    /**
+     * Мап содержащий обработчики для каждого события
+     */
+    private _events: Map<EventName, Set<Subscriber>>;
+
+    /**
+     * Создает новый экземпляр класса
+     */
     constructor() {
-        this._events = new Map<EventName, Set<Subscriber>>(); // Инициализация хранилища
+        this._events = new Map<EventName, Set<Subscriber>>();
     }
 
-    // Установить обработчик на событие
+    /**
+     * Установить обработчик на событие
+     * @param eventName Имя события
+     * @param callback Функция обработчик
+     */
     on<T extends object>(eventName: EventName, callback: (event: T) => void) {
         if (!this._events.has(eventName)) {
             this._events.set(eventName, new Set<Subscriber>());
         }
-        this._events.get(eventName)?.add(callback);
+        this._events.get(eventName)!.add(callback);
     }
 
-    // Снять обработчик с события
+    /**
+     * Снять обработчик с события
+     * @param eventName Имя события
+     * @param callback Функция обработчик
+     */
     off(eventName: EventName, callback: Subscriber) {
         if (this._events.has(eventName)) {
             this._events.get(eventName)!.delete(callback);
@@ -43,7 +95,11 @@ export class EventEmitter implements IEvents {
         }
     }
 
-    // Инициировать событие с данными
+    /**
+     * Инициировать событие с данными
+     * @param eventName Имя события
+     * @param data Данные, которые сопровождают событие
+     */
     emit<T extends object>(eventName: string, data?: T) {
         this._events.forEach((subscribers, name) => {
             if (name instanceof RegExp && name.test(eventName) || name === eventName) {
@@ -52,17 +108,27 @@ export class EventEmitter implements IEvents {
         });
     }
 
-    // Слушать все события
+    /**
+     * Слушать все события
+     * @param callback Функция обработчик
+     */
     onAll(callback: (event: EmitterEvent) => void) {
         this.on("*", callback);
     }
 
-    // Сбросить все обработчики
+    /**
+     * Сбросить все обработчики
+     */
     offAll() {
         this._events = new Map<string, Set<Subscriber>>();
     }
 
-    // Сделать коллбек триггер, генерирующий событие при вызове
+    /**
+     * Сделать коллбек триггер, генерирующий событие при вызове
+     * @param eventName Имя события
+     * @param context Данные, которые сопровождают событие
+     * @returns Функция триггер
+     */
     trigger<T extends object>(eventName: string, context?: Partial<T>) {
         return (event: object = {}) => {
             this.emit(eventName, {
@@ -72,3 +138,5 @@ export class EventEmitter implements IEvents {
         };
     }
 }
+
+

@@ -1,13 +1,10 @@
 // Импорт необходимых функций и классов
-import { ensureElement, createElement } from "../utils/utils";
-import { Component } from "./base/Component";
-import { EventEmitter } from "./base/events";
+import { ensureElement, createElement } from "../../utils/utils";
+import { Component } from "../base/component";
+import { EventEmitter } from "../base/events";
+import { IBasketView } from "../../types";
 
-// Интерфейс представления корзины
-export interface IBasketView {
-  items: HTMLElement[]; // Элементы корзины
-  total: number; // Общая стоимость
-}
+
 
 // Класс компонента "Корзина"
 export class Basket extends Component<IBasketView> {

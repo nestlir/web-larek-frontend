@@ -1,9 +1,10 @@
 import { IEvents } from "./events";
 
 /**
- * Проверка, является ли объект моделью
- * @param obj Объект для проверки
- * @returns Является ли объект моделью
+ * Гарда для проверки на модель
+ * 
+ * @param obj Объект, который нужно проверить на модель
+ * @returns Результат проверки
  */
 export const isModel = (obj: unknown): obj is Model<any> => {
     return obj instanceof Model;
@@ -11,28 +12,28 @@ export const isModel = (obj: unknown): obj is Model<any> => {
 
 /**
  * Базовая модель, чтобы можно было отличить ее от простых объектов с данными
+ * 
+ * @template T Тип данных модели
  */
 export abstract class Model<T> {
     /**
      * Конструктор модели
+     * 
      * @param data Данные для инициализации модели
-     * @param events Объект для отправки событий
+     * @param events Экземпляр инстанса событий
      */
     constructor(data: Partial<T>, protected events: IEvents) {
         Object.assign(this, data);
     }
 
     /**
-     * Сообщает всем, что модель изменилась
+     * Сообщить всем что модель поменялась
+     * 
      * @param event Имя события
-     * @param payload Дополнительные данные
+     * @param payload Данные, которые нужно передать в событие
      */
     emitChanges(event: string, payload?: object) {
         // Состав данных можно модифицировать
         this.events.emit(event, payload ?? {});
     }
-
-    /**
-     * Добавьте здесь общие методы для моделей
-     */
 }

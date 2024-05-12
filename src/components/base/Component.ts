@@ -1,16 +1,20 @@
 /**
- * Абстрактный класс компонента
+ * Абстрактный класс для создания компонентов
+ * @abstract
  */
 export abstract class Component<T> {
+  /**
+   * Конструктор класса
+   * @param {HTMLElement} container Контейнер для рендера
+   */
   protected constructor(protected readonly container: HTMLElement) {
-
   }
 
   /**
    * Переключение классов элемента
-   * @param element Элемент DOM
-   * @param className Название класса
-   * @param force Принудительное применение или снятие класса
+   * @param {HTMLElement} element Элемент, для которого нужно переключить классы
+   * @param {string} className Имя класса, который нужно переключить
+   * @param {boolean} [force] Если указано, то класс будет добавлен или удален независимо от его текущего состояния
    */
   toggleClass(element: HTMLElement, className: string, force?: boolean) {
     element.classList.toggle(className, force);
@@ -18,8 +22,8 @@ export abstract class Component<T> {
 
   /**
    * Обновление текстового содержимого элемента
-   * @param element Элемент DOM
-   * @param value Значение, которое будет установлено в качестве текста
+   * @param {HTMLElement} element Элемент, для которого нужно обновить текстовое содержимое
+   * @param {unknown} value Новое значение текстового содержимого
    */
   protected setText(element: HTMLElement, value: unknown) {
     if(element) {
@@ -28,9 +32,9 @@ export abstract class Component<T> {
   }
 
   /**
-   * Установка состояния блокировки элемента
-   * @param element Элемент DOM
-   * @param state Состояние блокировки
+   * Установка статуса блокировки элемента
+   * @param {HTMLElement} element Элемент, для которого нужно установить статус блокировки
+   * @param {boolean} state Статус блокировки
    */
   setDisable(element: HTMLElement, state: boolean) {
     if(element) {
@@ -41,15 +45,15 @@ export abstract class Component<T> {
 
   /**
    * Скрытие элемента
-   * @param element Элемент DOM
+   * @param {HTMLElement} element Элемент, который нужно скрыть
    */
   protected setHidden(element: HTMLElement) {
     element.style.display = 'none';
   }
 
   /**
-   * Отображение элемента
-   * @param element Элемент DOM
+   * Показ элемента
+   * @param {HTMLElement} element Элемент, который нужно показать
    */
   protected setVisible(element: HTMLElement) {
     element.style.removeProperty('display');
@@ -57,9 +61,9 @@ export abstract class Component<T> {
 
   /**
    * Установка изображения
-   * @param element Элемент DOM (должен быть HTMLImageElement)
-   * @param src URL изображения
-   * @param alt Альтернативный текст изображения
+   * @param {HTMLElement} element Элемент, для которого нужно установить изображение
+   * @param {string} src Ссылка на изображение
+   * @param {string} [alt] Альтернативный текст на случай если отсутствует ссылка на изображение
    */
   protected setImage(element: HTMLElement, src: string, alt?: string) {
     if (element instanceof HTMLImageElement) {
@@ -71,8 +75,9 @@ export abstract class Component<T> {
   }
 
   /**
-   * Возвращает рендер компонента в DOM
-   * @param data Данные для обновления компонента
+   * Возвращает рендер в DOM
+   * @param {Partial<T>} [data] Данные, которые нужно обновить перед рендером
+   * @returns {HTMLElement} Контейнер компонента
    */
   render(data?: Partial<T>): HTMLElement {
     Object.assign(this as object, data ?? {});

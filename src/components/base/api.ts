@@ -1,20 +1,44 @@
-// Тип ответа от API, содержащий список элементов указанного типа
+/**
+ * Модель ответа от API при получении списка элементов
+ */
 export type ApiListResponse<Type> = {
-    total: number; // Общее количество элементов
-    items: Type[]; // Список элементов
+    /**
+     * Общее количество элементов
+     */
+    total: number,
+
+    /**
+     * Массив полученных элементов
+     */
+    items: Type[]
 };
 
-// Типы HTTP-методов для запросов POST
+/**
+ * Доступные методы POST
+ */
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
 
-// Класс для работы с API
+/**
+ * Абстрактный класс для работы с API
+ */
 export class Api {
-    readonly baseUrl: string; // Базовый URL API
-    protected options: RequestInit; // Опции запроса
+    /**
+     * Базовый URL API
+     */
+    readonly baseUrl: string;
 
+    /**
+     * Опции для запросов
+     */
+    protected options: RequestInit;
+
+    /**
+     * Создает новый экземпляр класса Api
+     * @param baseUrl - Базовый URL API
+     * @param options - Опции для запросов
+     */
     constructor(baseUrl: string, options: RequestInit = {}) {
         this.baseUrl = baseUrl;
-        // Установка опций запроса
         this.options = {
             headers: {
                 'Content-Type': 'application/json',
@@ -23,14 +47,22 @@ export class Api {
         };
     }
 
-    // Обработка ответа от сервера
+    /**
+     * Обработчик ответа от API
+     * @param response - Ответ от API
+     * @returns Promise с данными ответа
+     */
     protected handleResponse(response: Response): Promise<object> {
-        if (response.ok) return response.json(); // Если ответ успешный, вернуть JSON
+        if (response.ok) return response.json();
         else return response.json()
-            .then(data => Promise.reject(data.error ?? response.statusText)); // Иначе вернуть ошибку
+            .then(data => Promise.reject(data.error ?? response.statusText));
     }
 
-    // Метод GET для получения данных
+    /**
+     * Отправляет GET-запрос к API
+     * @param uri - URI запроса
+     * @returns Promise с данными ответа
+     */
     get(uri: string) {
         return fetch(this.baseUrl + uri, {
             ...this.options,
@@ -38,7 +70,13 @@ export class Api {
         }).then(this.handleResponse);
     }
 
-    // Метод POST для отправки данных
+    /**
+     * Отправляет POST-запрос к API
+     * @param uri - URI запроса
+     * @param data - Данные запроса
+     * @param method - Метод запроса
+     * @returns Promise с данными ответа
+     */
     post(uri: string, data: object, method: ApiPostMethods = 'POST') {
         return fetch(this.baseUrl + uri, {
             ...this.options,
@@ -47,3 +85,4 @@ export class Api {
         }).then(this.handleResponse);
     }
 }
+
