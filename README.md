@@ -8,8 +8,11 @@ UML-схема классов
 Структура проекта
 
 📁src/
+
     📁common.blocks/
+
      📁core/
+
      📁api/
         📄 ApiCore.ts
         📄 LarekAPI.ts
@@ -49,7 +52,7 @@ UML-схема классов
         📄 index.ts
 
     📁vendor/
-    
+
     📄 index.ts
 
 Важные файлы
