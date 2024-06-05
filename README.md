@@ -13,18 +13,22 @@ UML-схема классов
      📁api/
         📄 ApiCore.ts
         📄 LarekAPI.ts
+
     📁base/
         📄 BaseComponent.ts
         📄 EventManager.ts
         📄 Model.ts
+
     📁utils/
         📄 constants.ts
         📄 utils.ts
+
     📁features/
      📁forms/
         📄 Form.ts
     📁modals/
         📄 Modal.ts
+
     📄 AppState.ts
     📄 Basket.ts
     📄 Card.ts
@@ -32,14 +36,20 @@ UML-схема классов
     📄 Order.ts
     📄 Page.ts
     📄 Success.ts
+
     📁images/
+
     📁pages/
         📄 index.html
+
     📁public/
     📁scss/
+
     📁types/
         📄 index.ts
+
     📁vendor/
+    
     📄 index.ts
 
 Важные файлы
