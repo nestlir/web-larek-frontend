@@ -3,23 +3,23 @@
 
 Структура проекта
 
-src/
-├── common.blocks/
-├── core/
-│   ├── api/
+📁src/
+├── 📁common.blocks/
+├── 📁core/
+│   ├──📁 api/
 │   │   ├── ApiCore.ts
 │   │   └── LarekAPI.ts
-│   ├── base/
+│   ├──📁 base/
 │   │   ├── BaseComponent.ts
 │   │   ├── EventManager.ts
 │   │   └── Model.ts
-│   ├── utils/
+│   ├──📁 utils/
 │   │   ├── constants.ts
 │   │   └── utils.ts
-├── features/
-│   ├── forms/
+├── 📁 features/
+│   ├──📁 forms/
 │   │   └── Form.ts
-│   ├── modals/
+│   ├──📁 modals/
 │   │   └── Modal.ts
 │   ├── AppState.ts
 │   ├── Basket.ts
@@ -28,14 +28,14 @@ src/
 │   ├── Order.ts
 │   ├── Page.ts
 │   └── Success.ts
-├── images/
-├── pages/
+├──📁 images/
+├──📁 pages/
 │   └── index.html
-├── public/
-├── scss/
-├── types/
+├──📁 public/
+├──📁 scss/
+├──📁 types/
 │   └── index.ts
-├── vendor/
+├──📁 vendor/
 └── index.ts
 
 Важные файлы
