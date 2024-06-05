@@ -7,36 +7,36 @@
 ├── 📁common.blocks/
 ├── 📁core/
 │   ├──📁 api/
-│   │   ├── ApiCore.ts
-│   │   └── LarekAPI.ts
+│   │   ├──📄 ApiCore.ts
+│   │   └──📄 LarekAPI.ts
 │   ├──📁 base/
-│   │   ├── BaseComponent.ts
-│   │   ├── EventManager.ts
-│   │   └── Model.ts
+│   │   ├──📄 BaseComponent.ts
+│   │   ├──📄 EventManager.ts
+│   │   └──📄 Model.ts
 │   ├──📁 utils/
-│   │   ├── constants.ts
-│   │   └── utils.ts
+│   │   ├──📄 constants.ts
+│   │   └──📄 utils.ts
 ├── 📁 features/
 │   ├──📁 forms/
-│   │   └── Form.ts
+│   │   └──📄 Form.ts
 │   ├──📁 modals/
-│   │   └── Modal.ts
-│   ├── AppState.ts
-│   ├── Basket.ts
-│   ├── Card.ts
-│   ├── Contact.ts
-│   ├── Order.ts
-│   ├── Page.ts
-│   └── Success.ts
+│   │   └──📄 Modal.ts
+│   ├──📄 AppState.ts
+│   ├──📄 Basket.ts
+│   ├──📄 Card.ts
+│   ├──📄 Contact.ts
+│   ├──📄 Order.ts
+│   ├──📄 Page.ts
+│   └──📄 Success.ts
 ├──📁 images/
 ├──📁 pages/
-│   └── index.html
+│   └──📄 index.html
 ├──📁 public/
 ├──📁 scss/
 ├──📁 types/
-│   └── index.ts
+│   └──📄 index.ts
 ├──📁 vendor/
-└── index.ts
+└──📄 index.ts
 
 Важные файлы
 src/pages/index.html — HTML-файл главной страницы
