@@ -8,53 +8,39 @@ UML-схема классов
 Структура проекта
 
 📁src/
-├── 📁common.blocks/
-
-├── 📁core/
-
-│ ├── 📁api/
-│ │ ├── 📄 ApiCore.ts
-│ │ └── 📄 LarekAPI.ts
-
-│ ├── 📁base/
-│ │ ├── 📄 BaseComponent.ts
-│ │ ├── 📄 EventManager.ts
-│ │ └── 📄 Model.ts
-
-│ ├── 📁utils/
-│ │ ├── 📄 constants.ts
-│ │ └── 📄 utils.ts
-
-├── 📁features/
-│ ├── 📁forms/
-│ │ └── 📄 Form.ts
-
-│ ├── 📁modals/
-│ │ └── 📄 Modal.ts
-
-│ ├── 📄 AppState.ts
-│ ├── 📄 Basket.ts
-│ ├── 📄 Card.ts
-│ ├── 📄 Contact.ts
-│ ├── 📄 Order.ts
-│ ├── 📄 Page.ts
-│ └── 📄 Success.ts
-
-├── 📁images/
-
-├── 📁pages/
-│ └── 📄 index.html
-
-├── 📁public/
-
-├── 📁scss/
-
-├── 📁types/
-│ └── 📄 index.ts
-
-├── 📁vendor/
-
-└── 📄 index.ts
+    📁common.blocks/
+     📁core/
+     📁api/
+        📄 ApiCore.ts
+        📄 LarekAPI.ts
+    📁base/
+        📄 BaseComponent.ts
+        📄 EventManager.ts
+        📄 Model.ts
+    📁utils/
+        📄 constants.ts
+        📄 utils.ts
+    📁features/
+     📁forms/
+        📄 Form.ts
+    📁modals/
+        📄 Modal.ts
+    📄 AppState.ts
+    📄 Basket.ts
+    📄 Card.ts
+    📄 Contact.ts
+    📄 Order.ts
+    📄 Page.ts
+    📄 Success.ts
+    📁images/
+    📁pages/
+        📄 index.html
+    📁public/
+    📁scss/
+    📁types/
+        📄 index.ts
+    📁vendor/
+    📄 index.ts
 
 Важные файлы
 src/pages/index.html — HTML-файл главной страницы
