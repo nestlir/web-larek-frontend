@@ -59,7 +59,7 @@ export class Basket extends Component<IBasketView> {
     } else {
       this._list.replaceChildren(
         createElement<HTMLParagraphElement>('p', {
-          textContent: 'Если вы видите это сообщение, то корзина действительно пуста как мой кошелёк, скиньте Денег. п.с. МУЖ  -_-'
+          textContent: 'Если вы видите это сообщение, то корзина действительно пуста -_-'
         })
       );
       this.disableButton('true'); // Отключаем кнопку, если корзина пуста
