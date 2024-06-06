@@ -4,7 +4,7 @@ import { API_URL, CDN_URL } from "./core/utils/constants";
 import { EventEmitter } from "./core/base/EventManager";
 import { AppState, CatalogChangeEvent, Product } from "./features/AppState";
 import { Page } from "./features/Page";
-import { cloneTemplate, createElement, ensureElement } from "./core/utils/utils";
+import { cloneTemplate, ensureElement } from "./core/utils/utils";
 import { Modal } from "./features/modals/Modal";
 import { BasketItem, Card } from './features/Card';
 import { Basket } from './features/Basket';

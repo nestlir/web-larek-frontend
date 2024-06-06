@@ -1,3 +1,4 @@
+import { IEvents } from "../core/base/EventManager";
 import { Model } from "../core/base/Model";
 import { IAppState, IProduct, IOrder, FormError, IOrderContacts, PaymenthMethods } from "../types";
 
@@ -6,7 +7,9 @@ export type CatalogChangeEvent = {
   catalog: Product[];
 }
 
-// Класс Product, представляющий продукт и наследующий Model
+/**
+ * Класс Product представляет продукт и наследует Model.
+ */
 export class Product extends Model<IProduct> implements IProduct {
   id: string;
   description: string;
@@ -14,9 +17,27 @@ export class Product extends Model<IProduct> implements IProduct {
   title: string;
   category: string;
   price: number;
+
+  /**
+   * Конструктор класса Product.
+   * @param {IProduct} data - Данные продукта.
+   * @param {IEvents} events - Объект для управления событиями.
+   */
+  constructor(data: IProduct, events: IEvents) {
+    super(data, events);
+    this.id = data.id;
+    this.description = data.description;
+    this.image = data.image;
+    this.title = data.title;
+    this.category = data.category;
+    this.price = data.price;
+  }
 }
 
-// Класс AppState, представляющий состояние приложения и наследующий Model
+
+/**
+ * Класс AppState представляет состояние приложения и наследует Model.
+ */
 export class AppState extends Model<IAppState> {
   catalog: IProduct[];
   basket: IProduct[] = [];
@@ -27,23 +48,29 @@ export class AppState extends Model<IAppState> {
     email: "",
     phone: "",
     address: ""
-  }
-  preview: string | null;
+  };
+  preview: string | null = null;
   formErrors: FormError = {};
 
-  // Обновление корзины и уведомление подписчиков об изменении
+  /**
+   * Обновление корзины и уведомление подписчиков об изменении.
+   */
   updateBasket() {
     this.emitChanges('counter:changed', this.basket);
     this.emitChanges('basket:changed', this.basket);
   }
 
-  // Очистка корзины
+  /**
+   * Очистка корзины.
+   */
   clearBasket() {
     this.basket = [];
     this.updateBasket();
   }
 
-  // Очистка заказа
+  /**
+   * Очистка заказа.
+   */
   clearOrder() {
     this.order = {
       payment: "card",
@@ -52,93 +79,131 @@ export class AppState extends Model<IAppState> {
       email: "",
       phone: "",
       address: ""
-    }
+    };
   }
 
-  // Установка каталога продуктов
+  /**
+   * Установка каталога продуктов.
+   * @param {IProduct[]} items - Массив продуктов.
+   */
   setCatalog(items: IProduct[]) {
-    this.catalog = items.map(item => new Product(item, this.events))
-    this.emitChanges('items:changed', { catalog: this.catalog })
+    this.catalog = items.map(item => new Product(item, this.events));
+    this.emitChanges('items:changed', { catalog: this.catalog });
   }
 
-  // Установка предпросмотра продукта
+  /**
+   * Установка предпросмотра продукта.
+   * @param {Product} item - Продукт для предпросмотра.
+   */
   setPreview(item: Product) {
     this.preview = item.id;
-    this.emitChanges('preview:changed', item)
+    this.emitChanges('preview:changed', item);
   }
 
-  // Получение продуктов из заказа
+  /**
+   * Получение продуктов из заказа.
+   * @returns {IProduct[]} - Массив продуктов.
+   */
   getOrderProducts(): IProduct[] {
     return this.basket;
   }
 
-  // Проверка, находится ли продукт в заказе
+  /**
+   * Проверка, находится ли продукт в заказе.
+   * @param {IProduct} item - Продукт для проверки.
+   * @returns {boolean} - Результат проверки.
+   */
   productOrder(item: IProduct): boolean {
     return this.basket.includes(item);
   }
 
-  // Добавление продукта в корзину
+  /**
+   * Добавление продукта в корзину.
+   * @param {Product} item - Продукт для добавления.
+   */
   addToBasket(item: Product) {
     if (this.basket.indexOf(item) < 0) {
-      this.basket.push(item)
+      this.basket.push(item);
       this.updateBasket();
     }
   }
 
-  // Удаление продукта из корзины по идентификатору
+  /**
+   * Удаление продукта из корзины по идентификатору.
+   * @param {string} id - Идентификатор продукта.
+   */
   removeFromBasket(id: string) {
-    this.basket = this.basket.filter((it) => it.id != id)
+    this.basket = this.basket.filter((it) => it.id !== id);
     this.emitChanges('basket:changed');
   }
 
-  // Подсчет общей стоимости заказа
+  /**
+   * Подсчет общей стоимости заказа.
+   * @returns {number} - Общая стоимость заказа.
+   */
   getTotal(): number {
-    return this.order.items.reduce((total, item) => total + this.catalog.find(it => it.id === item).price, 0)
+    return this.order.items.reduce((total, item) => total + this.catalog.find(it => it.id === item).price, 0);
   }
 
-  // Установка метода оплаты
+  /**
+   * Установка метода оплаты.
+   * @param {string} method - Метод оплаты.
+   */
   setPaymentMethod(method: string) {
     this.order.payment = method as PaymenthMethods;
     this.validateDelivery();
   }
 
-  // Установка поля адреса доставки
+  /**
+   * Установка поля адреса доставки.
+   * @param {string} value - Значение адреса.
+   */
   setOrderDeliveryField(value: string) {
     this.order.address = value;
     this.validateDelivery();
   }
 
-  // Установка поля контактов заказа
+  /**
+   * Установка поля контактов заказа.
+   * @param {keyof IOrderContacts} field - Поле контакта.
+   * @param {string} value - Значение поля.
+   */
   setOrderContactField(field: keyof IOrderContacts, value: string) {
     this.order[field] = value;
     this.validateContact();
   }
 
-  // Валидация формы доставки
-  validateDelivery() {
+  /**
+   * Валидация формы доставки.
+   * @returns {boolean} - Результат валидации.
+   */
+  validateDelivery(): boolean {
     const errors: typeof this.formErrors = {};
     if (!this.order.payment) {
-      errors.payment = 'Необходимо указать способ оплаты'
+      errors.payment = 'Необходимо указать способ оплаты';
     }
     if (!this.order.address) {
-      errors.address = 'Необходимо указать адрес'
+      errors.address = 'Необходимо указать адрес';
     }
     this.formErrors = errors;
-    this.events.emit('deliveryFormError:change', this.formErrors)
-    return Object.keys(errors).length === 0
+    this.events.emit('deliveryFormError:change', this.formErrors);
+    return Object.keys(errors).length === 0;
   }
 
-  // Валидация контактной формы
-  validateContact() {
+  /**
+   * Валидация контактной формы.
+   * @returns {boolean} - Результат валидации.
+   */
+  validateContact(): boolean {
     const errors: typeof this.formErrors = {};
     if (!this.order.email) {
-      errors.email = 'Необходимо указать email'
+      errors.email = 'Необходимо указать email';
     }
     if (!this.order.phone) {
-      errors.phone = 'Необходимо указать телефон'
+      errors.phone = 'Необходимо указать телефон';
     }
     this.formErrors = errors;
-    this.events.emit('contactFormError:change', this.formErrors)
-    return Object.keys(errors).length === 0
+    this.events.emit('contactFormError:change', this.formErrors);
+    return Object.keys(errors).length === 0;
   }
 }

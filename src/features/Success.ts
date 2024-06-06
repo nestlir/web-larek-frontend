@@ -11,11 +11,18 @@ interface ISuccessActions {
   onClick: () => void;
 }
 
-// Класс Success, представляющий сообщение об успешной операции и наследующий базовый класс Component
+/**
+ * Класс Success представляет сообщение об успешной операции и наследует базовый класс Component.
+ */
 export class Success extends Component<ISuccess> {
   protected _close: HTMLElement; // Кнопка закрытия сообщения
   protected _total: HTMLElement; // Элемент для отображения общей суммы списания
 
+  /**
+   * Конструктор класса Success.
+   * @param {HTMLElement} container - Контейнер, в который будет добавлено сообщение.
+   * @param {ISuccessActions} actions - Действия, выполняемые при успехе.
+   */
   constructor(container: HTMLElement, actions: ISuccessActions) {
     super(container);
 
@@ -24,12 +31,15 @@ export class Success extends Component<ISuccess> {
     this._total = ensureElement<HTMLElement>('.order-success__description', this.container);
 
     // Добавляем обработчик события клика на кнопку закрытия
-    if(actions?.onClick) {
+    if (actions?.onClick) {
       this._close.addEventListener('click', actions.onClick);
     }
   }
 
-  // Установка общей суммы списания
+  /**
+   * Установка общей суммы списания.
+   * @param {string} total - Общая сумма списания.
+   */
   set total(total: string) {
     this.setText(this._total, `Списано ${total} синапсов`);
   }

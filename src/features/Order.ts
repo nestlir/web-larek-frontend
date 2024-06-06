@@ -3,12 +3,19 @@ import { ensureElement } from "../core/utils/utils";
 import { IEvents } from "../core/base/EventManager";
 import { Form } from "./forms/Form";
 
-// Класс Order, представляющий форму заказа и наследующий базовый класс Form
+/**
+ * Класс Order представляет форму заказа и наследует базовый класс Form.
+ */
 export class Order extends Form<IOrderDeliveryForm> {
   protected _paymentContainer: HTMLDivElement; // Контейнер для кнопок выбора метода оплаты
   protected _paymentButton: HTMLButtonElement[]; // Массив кнопок выбора метода оплаты
   protected _addressInput: HTMLInputElement; // Поле ввода адреса
 
+  /**
+   * Конструктор класса Order.
+   * @param {HTMLFormElement} container - Контейнер, в который будет добавлена форма заказа.
+   * @param {IEvents} events - Объект для управления событиями.
+   */
   constructor(container: HTMLFormElement, events: IEvents) {
     super(container, events);
 
@@ -25,14 +32,20 @@ export class Order extends Form<IOrderDeliveryForm> {
     });
   }
 
-  // Переключение классов активной кнопки оплаты
+  /**
+   * Переключение классов активной кнопки оплаты.
+   * @param {string} className - Класс активной кнопки.
+   */
   setToggleClassPayment(className: string) {
     this._paymentButton.forEach(button => {
       this.toggleClass(button, 'button_alt-active', button.name === className);
     });
   }
 
-  // Установка значения адреса
+  /**
+   * Установка значения адреса.
+   * @param {string} value - Новое значение адреса.
+   */
   set address(value: string) {
     this._addressInput.value = value;
   }

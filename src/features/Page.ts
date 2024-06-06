@@ -9,13 +9,20 @@ interface IPage {
   locked: boolean;
 }
 
-// Класс Page, представляющий страницу и наследующий базовый класс Component
+/**
+ * Класс Page представляет страницу и наследует базовый класс Component.
+ */
 export class Page extends Component<IPage> {
   protected _counter: HTMLElement; // Элемент для отображения счетчика корзины
   protected _catalog: HTMLElement; // Элемент для отображения каталога
   protected _wrapper: HTMLElement; // Обертка страницы
   protected _basket: HTMLElement; // Элемент корзины
 
+  /**
+   * Конструктор класса Page.
+   * @param {HTMLElement} container - Контейнер, в который будет добавлен элемент страницы.
+   * @param {IEvents} events - Объект для управления событиями.
+   */
   constructor(container: HTMLElement, protected events: IEvents) {
     super(container);
 
@@ -31,17 +38,26 @@ export class Page extends Component<IPage> {
     });
   }
 
-  // Установка значения счетчика корзины
+  /**
+   * Установка значения счетчика корзины.
+   * @param {number} value - Новое значение счетчика.
+   */
   set counter(value: number) {
     this.setText(this._counter, String(value));
   }
 
-  // Установка каталога товаров
+  /**
+   * Установка каталога товаров.
+   * @param {HTMLElement[]} items - Массив элементов каталога.
+   */
   set catalog(items: HTMLElement[]) {
     this._catalog.replaceChildren(...items);
   }
 
-  // Установка состояния блокировки страницы
+  /**
+   * Установка состояния блокировки страницы.
+   * @param {boolean} value - Состояние блокировки.
+   */
   set locked(value: boolean) {
     this.toggleClass(this._wrapper, 'page__wrapper_locked', value);
   }

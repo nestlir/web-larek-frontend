@@ -7,7 +7,9 @@ export interface ICardAction {
   onClick: (event: MouseEvent) => void;
 }
 
-// Класс Card, представляющий карточку товара и наследующий базовый класс Component
+/**
+ * Класс Card представляет карточку товара и наследует базовый класс Component.
+ */
 export class Card<T> extends Component<ICard> {
   protected _title: HTMLElement;          // Заголовок карточки
   protected _image?: HTMLImageElement;    // Изображение карточки
@@ -26,6 +28,12 @@ export class Card<T> extends Component<ICard> {
     другое: "_other"
   };
 
+  /**
+   * Конструктор класса Card.
+   * @param {string} blockName - Имя блока для поиска элементов.
+   * @param {HTMLElement} container - Контейнер, в который будет добавлена карточка.
+   * @param {ICardAction} [action] - Действие, выполняемое при клике на карточку.
+   */
   constructor(protected blockName: string, container: HTMLElement, action?: ICardAction) {
     super(container);
     
@@ -47,43 +55,62 @@ export class Card<T> extends Component<ICard> {
     }
   }
 
-  // Отключение кнопки при отсутствии цены
+  /**
+   * Отключение кнопки при отсутствии цены.
+   * @param {number | null} value - Значение цены.
+   */
   priceDisabled(value: number | null) {
-    if (!value) {
-      if (this._button) {
-        this._button.disabled = true;
-      }
+    if (!value && this._button) {
+      this._button.disabled = true;
     }
   }
 
-  // Установка идентификатора карточки
+  /**
+   * Установка идентификатора карточки.
+   * @param {string} value - Идентификатор карточки.
+   */
   set id(value: string) {
     this.container.dataset.id = value;
   }
 
-  // Получение идентификатора карточки
+  /**
+   * Получение идентификатора карточки.
+   * @returns {string} - Идентификатор карточки.
+   */
   get id(): string {
     return this.container.dataset.id || "";
   }
 
-  // Установка заголовка карточки
+  /**
+   * Установка заголовка карточки.
+   * @param {string} value - Заголовок карточки.
+   */
   set title(value: string) {
     this.setText(this._title, value);
   }
 
-  // Получение заголовка карточки
+  /**
+   * Получение заголовка карточки.
+   * @returns {string} - Заголовок карточки.
+   */
   get title(): string {
     return this._title.textContent || "";
   }
 
-  // Установка текста кнопки
+  /**
+   * Установка текста кнопки.
+   * @param {string} value - Текст кнопки.
+   */
   set buttonTitle(value: string) {
     if (this._button) {
       this.setText(this._button, value);
     }
   }
 
-  // Установка изображения карточки
+  /**
+   * Установка изображения карточки.
+   * @param {string} value - URL изображения.
+   */
   set image(value: string) {
     if (this._image instanceof HTMLImageElement) {
       this._image.src = value;
@@ -91,18 +118,27 @@ export class Card<T> extends Component<ICard> {
     }
   }
 
-  // Установка цены карточки
+  /**
+   * Установка цены карточки.
+   * @param {number | null} value - Цена карточки.
+   */
   set price(value: number | null) {
-    this.setText(this._price, (value) ? `${value.toString()} синапсов` : 'Бесценно');
+    this.setText(this._price, value ? `${value.toString()} синапсов` : 'Бесценно');
     this.priceDisabled(value);
   }
 
-  // Получение цены карточки
+  /**
+   * Получение цены карточки.
+   * @returns {number} - Цена карточки.
+   */
   get price(): number {
     return Number(this._price.textContent || '');
   }
 
-  // Установка категории карточки
+  /**
+   * Установка категории карточки.
+   * @param {string} value - Категория карточки.
+   */
   set category(value: string) {
     this.setText(this._category, value);
     const category = this._category.classList[0];
@@ -111,7 +147,10 @@ export class Card<T> extends Component<ICard> {
     this._category.classList.add(`${category}${this.categoryKey[value]}`);
   }
 
-  // Установка описания карточки
+  /**
+   * Установка описания карточки.
+   * @param {string | string[]} value - Описание карточки.
+   */
   set description(value: string | string[]) {
     if (Array.isArray(value)) {
       this._description.replaceWith(...value.map(str => {
@@ -131,13 +170,21 @@ export interface IBasketItem {
   price: number;
 }
 
-// Класс BasketItem, представляющий элемент корзины и наследующий базовый класс Component
+/**
+ * Класс BasketItem представляет элемент корзины и наследует базовый класс Component.
+ */
 export class BasketItem extends Component<IBasketItem> {
   protected _index: HTMLElement;  // Индекс элемента в корзине
   protected _title: HTMLElement;  // Заголовок элемента
   protected _price: HTMLElement;  // Цена элемента
   protected _button: HTMLButtonElement;  // Кнопка действия элемента
 
+  /**
+   * Конструктор класса BasketItem.
+   * @param {HTMLElement} container - Контейнер, в который будет добавлен элемент корзины.
+   * @param {number} index - Индекс элемента в корзине.
+   * @param {ICardAction} [action] - Действие, выполняемое при клике на элемент корзины.
+   */
   constructor(container: HTMLElement, index: number, action?: ICardAction) {
     super(container);
 
@@ -156,17 +203,26 @@ export class BasketItem extends Component<IBasketItem> {
     }
   }
 
-  // Установка индекса элемента
+  /**
+   * Установка индекса элемента.
+   * @param {number} value - Новый индекс элемента.
+   */
   set index(value: number) {
     this.setText(this._index, value);
   }
 
-  // Установка заголовка элемента
+  /**
+   * Установка заголовка элемента.
+   * @param {string} value - Новый заголовок элемента.
+   */
   set title(value: string) {
     this.setText(this._title, value);
   }
 
-  // Установка цены элемента
+  /**
+   * Установка цены элемента.
+   * @param {number} value - Новая цена элемента.
+   */
   set price(value: number) {
     this.setText(this._price, value);
   }

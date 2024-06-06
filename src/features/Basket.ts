@@ -8,12 +8,19 @@ export interface IBasketView {
   total: number;
 }
 
-// Класс Basket, представляющий корзину и наследующий базовый класс Component
+/**
+ * Класс Basket представляет корзину и наследует базовый класс Component.
+ */
 export class Basket extends Component<IBasketView> {
   protected _list: HTMLElement;  // Элемент списка товаров в корзине
-  protected _total: HTMLElement;  // Элемент отображения общей
+  protected _total: HTMLElement;  // Элемент отображения общей суммы
   protected _button: HTMLElement; // Кнопка для оформления заказа
 
+  /**
+   * Конструктор класса Basket.
+   * @param {HTMLElement} container - Контейнер, в который будет добавлена корзина.
+   * @param {EventEmitter} events - Объект для управления событиями.
+   */
   constructor(container: HTMLElement, protected events: EventEmitter) {
     super(container);
 
@@ -33,12 +40,18 @@ export class Basket extends Component<IBasketView> {
     this.items = [];
   }
 
-  // Отключение кнопки оформления заказа
+  /**
+   * Отключение кнопки оформления заказа.
+   * @param {string} value - Значение атрибута `disabled`.
+   */
   disableButton(value: string) {
     this._button.setAttribute('disabled', value);
   }
 
-  // Установка списка товаров в корзине
+  /**
+   * Установка списка товаров в корзине.
+   * @param {HTMLElement[]} items - Массив элементов товаров.
+   */
   set items(items: HTMLElement[]) {
     if (items.length) {
       this._list.replaceChildren(...items);
@@ -53,7 +66,10 @@ export class Basket extends Component<IBasketView> {
     }
   }
 
-  // Установка общей суммы товаров в корзине
+  /**
+   * Установка общей суммы товаров в корзине.
+   * @param {number} total - Общая сумма товаров.
+   */
   set total(total: number) {
     this.setText(this._total, `${total.toString()} синапсов`);
   }

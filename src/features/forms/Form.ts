@@ -8,11 +8,18 @@ interface IFormState {
     errors: string[];
 }
 
-// Класс Form, расширяющий базовый класс Component и представляющий форму с управлением состоянием и событиями
+/**
+ * Класс Form, расширяющий базовый класс Component и представляющий форму с управлением состоянием и событиями.
+ */
 export class Form<T> extends Component<IFormState> {
     protected _submit: HTMLButtonElement; // Кнопка отправки формы
     protected _errors: HTMLElement; // Элемент для отображения ошибок
 
+    /**
+     * Конструктор класса Form.
+     * @param {HTMLFormElement} container - Контейнер, в который будет добавлена форма.
+     * @param {IEvents} events - Объект для управления событиями.
+     */
     constructor(protected container: HTMLFormElement, protected events: IEvents) {
         super(container);
 
@@ -35,7 +42,11 @@ export class Form<T> extends Component<IFormState> {
         });
     }
 
-    // Обработчик изменений ввода в поля формы
+    /**
+     * Обработчик изменений ввода в поля формы.
+     * @param {keyof T} field - Поле формы.
+     * @param {string} value - Значение поля.
+     */
     protected onInputChange(field: keyof T, value: string) {
         this.events.emit(`${this.container.name}.${String(field)}:change`, {
             field,
@@ -43,18 +54,28 @@ export class Form<T> extends Component<IFormState> {
         });
     }
 
-    // Устанавливаем валидность формы и включаем/отключаем кнопку отправки
+    /**
+     * Устанавливаем валидность формы и включаем/отключаем кнопку отправки.
+     * @param {boolean} value - Валидность формы.
+     */
     set valid(value: boolean) {
         this._submit.disabled = !value;
     }
 
-    // Устанавливаем ошибки и обновляем их отображение
+    /**
+     * Устанавливаем ошибки и обновляем их отображение.
+     * @param {string} value - Текст ошибки.
+     */
     set errors(value: string) {
         this.setText(this._errors, value);
     }
 
-    // Рендерим состояние формы и обновляем её элементы
-    render(state: Partial<T> & IFormState) {
+    /**
+     * Рендерим состояние формы и обновляем её элементы.
+     * @param {Partial<T> & IFormState} state - Состояние формы.
+     * @returns {HTMLFormElement} - Контейнер формы.
+     */
+    render(state: Partial<T> & IFormState): HTMLFormElement {
         const { valid, errors, ...inputs } = state;
         super.render({ valid, errors });
         Object.assign(this, inputs);
