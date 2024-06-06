@@ -9,7 +9,7 @@ import { Modal } from "./features/modals/Modal";
 import { BasketItem, Card } from './features/Card';
 import { Basket } from './features/Basket';
 import { Order } from './features/Order';
-import { Success } from './features/Success';
+import { Success } from './features/Succes';
 import { Contacts } from './features/Contact';
 import { IOrderContacts, IOrderDeliveryForm, PaymenthMethods } from './types';
 
