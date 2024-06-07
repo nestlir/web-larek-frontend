@@ -46,7 +46,7 @@ events.on<CatalogChangeEvent>('items:changed', () => {
       title: item.title,
       image: item.image,
       price: item.price,
-      category: item.category
+      category: item.category,
     });
   });
 });

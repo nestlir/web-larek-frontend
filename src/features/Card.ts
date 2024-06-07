@@ -42,7 +42,7 @@ export class Card<T> extends Component<ICard> {
     this._image = ensureElement<HTMLImageElement>(`.${blockName}__image`, container);
     this._price = ensureElement<HTMLElement>(`.${blockName}__price`, container);
     this._category = container.querySelector(`.${blockName}__category`);
-    this._description = container.querySelector(`.${blockName}__description`);
+    this._description = container.querySelector(`.${blockName}__text`);
     this._button = container.querySelector(`.${blockName}__button`);
 
     // Добавляем обработчик события клика для карточки или кнопки
