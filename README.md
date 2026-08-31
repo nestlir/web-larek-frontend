@@ -1,49 +1,81 @@
 # Web Larek — Typed E-commerce Frontend
 
-> E-commerce interface built around MVP architecture, typed domain models and API-driven user flows.
+E-commerce frontend built with TypeScript, modular UI components and an API-driven checkout flow.
 
-## Overview
+## Features
 
-Web Larek is a product catalog and checkout experience. The frontend separates data, presentation and interaction through a Model–View–Presenter architecture and communicates with a backend API.
-
-## What I demonstrated
-
-- TypeScript domain modeling and strict interfaces;
-- Model–View–Presenter architecture;
-- API abstraction and asynchronous data loading;
-- reusable UI components;
-- form validation and checkout flow;
-- basket and order state management;
-- modular SCSS architecture;
-- Webpack-based build pipeline.
+- product catalog;
+- product preview;
+- shopping basket;
+- order and contact forms;
+- form validation;
+- order submission;
+- typed application state;
+- API integration.
 
 ## Architecture
 
-**Model** handles application data and API communication. **View** renders the interface and user interactions. **Presenter** coordinates state changes and connects the two layers.
+The project follows a Model–View–Presenter-oriented structure:
 
-The architecture is intentionally explicit: business/data logic is separated from DOM concerns, making the application easier to reason about and extend.
+```text
+src/
+├── core/       API, base abstractions and utilities
+├── features/   application state and UI features
+├── types/      TypeScript contracts
+└── common.blocks/ SCSS components
+```
+
+This separation keeps domain state, UI rendering and interaction logic distinct.
 
 ## Stack
 
-**TypeScript · HTML5 · SCSS · Webpack · REST API · MVP**
+- TypeScript
+- HTML5
+- SCSS
+- Webpack
+- REST API
+- ESLint
+- Prettier
 
 ## Run locally
 
+Requirements: Node.js 20+ and npm.
+
 ```bash
-npm install
+npm ci
 npm run start
 ```
 
-Production build:
+Create a production build:
 
 ```bash
 npm run build
 ```
 
-## Why this project matters
+Run static checks:
 
-This case demonstrates a step beyond visual frontend work: designing a small application architecture, maintaining typed contracts and coordinating several connected user flows.
+```bash
+npm run lint
+```
 
-## Context
+## Deployment
 
-Originally created during frontend training; presented here as an architecture-focused e-commerce case study.
+The repository includes a GitHub Actions workflow that installs dependencies, creates the production bundle and publishes `dist/` to GitHub Pages after updates to `main`.
+
+## Available scripts
+
+| Command | Description |
+|---|---|
+| `npm run start` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format source files with Prettier |
+
+## Additional documentation
+
+- `api.yml` — API contract;
+- `UML-схема классов.png` — class diagram.
+
+## Project value
+
+The repository demonstrates typed frontend architecture, explicit domain contracts and coordination of multiple connected user flows in a small e-commerce application.

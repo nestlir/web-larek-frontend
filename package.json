@@ -42,7 +42,8 @@
     "lint": "eslint --ext .js,.ts ./src",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "abbrev": "^1.1.1",
@@ -596,5 +597,6 @@
     "yeoman-generator": "^5.8.0",
     "yocto-queue": "^0.1.0"
   },
-  "author": ""
+  "author": "",
+  "homepage": "https://nestlir.github.io/web-larek-frontend/"
 }
